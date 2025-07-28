@@ -1,3 +1,4 @@
+# lots of things stolen from https://git.flake.sh/notohh/snowflake
 {
   description = "order";
 
@@ -5,7 +6,8 @@
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        ./old
+        ./home/profiles
+        ./hosts
       ];
       systems = [ "x86_64-linux" ];
       perSystem =
@@ -21,6 +23,7 @@
               alejandra
               git
               helix
+              nil
             ];
           };
           formatter = pkgs.alejandra;
@@ -33,5 +36,9 @@
 
     # utils
     flake-parts.url = "github:hercules-ci/flake-parts";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

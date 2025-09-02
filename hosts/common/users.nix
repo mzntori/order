@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   users = {
     defaultUserShell = pkgs.fish;
 
@@ -8,6 +6,7 @@
       isNormalUser = true;
       description = "tori";
       extraGroups = [
+        "docker"
         "networkmanager"
         "wheel"
         "openrazer"

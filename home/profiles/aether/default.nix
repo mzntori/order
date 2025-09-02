@@ -1,7 +1,17 @@
-{ pkgs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: let
+  cfg = {
+    starship.settings = "aether";
+  };
+in {
+  _module.args = {inherit cfg;};
+
   imports = [
+    # ../../gtk
+
     ../../languages/c
     ../../languages/go
     ../../languages/haskell
@@ -14,6 +24,7 @@
     ../../languages/rust
 
     ../../packages/cemu.nix
+    ../../packages/teams.nix
     ../../packages/thunar.nix
 
     ../../programs/browsers/firefox
@@ -24,6 +35,7 @@
     ../../programs/terminal/direnv.nix
     ../../programs/terminal/fish.nix
     ../../programs/terminal/lazygit.nix
+    ../../programs/terminal/starship
     ../../programs/terminal/vifm.nix
     ../../programs/tools/obs-studio.nix
     ../../programs/tools/wine.nix
@@ -48,20 +60,30 @@
     # tools
     arandr
     aseprite
+    blockbench
+    filezilla
     godot
     helvum
     krita
     nsxiv
     polychromatic
+    scrot
+    xclip
+    xcolor
     xournalpp
 
     # programs
     chatterino2
     google-chrome
+    lima
+    modrinth-app
     vesktop
 
     # terminal
     calcurse
+    claude-code
+    ddev
+    file
     gnumake
     hexedit
     imagemagick
@@ -72,5 +94,12 @@
 
     # libs
     openssl
+
+    # system
+    envfs
+  ];
+
+  nixpkgs.overlays = [
+    inputs.claude-code.overlays.default
   ];
 }

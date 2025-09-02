@@ -9,7 +9,6 @@
     extraPackages = with pkgs; [
       i3lock
       rofi
-      scrot
       xdg-user-dirs
       xclip
       xcolor

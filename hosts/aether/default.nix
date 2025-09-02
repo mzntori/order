@@ -1,16 +1,17 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./audio.nix
     ./bluetooth.nix
     ./boot.nix
+    ./earlyoom.nix
     ./gaming.nix
     ./hardware.nix
     ./network.nix
     ./nix-ld.nix
     ./nvidia.nix
+    ./virtualisation.nix
     ./xorg.nix
+    ./zram.nix
     ../common
   ];
 
@@ -33,7 +34,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
     config.common.default = "gtk";
   };
 
@@ -77,6 +78,7 @@
   services.gvfs.enable = true;
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   environment.systemPackages = with pkgs; [
     helix

@@ -8,6 +8,8 @@
       			set fish_greeting
       		'';
 
+    loginShellInit = '''';
+
     shellAliases = {
 
     };

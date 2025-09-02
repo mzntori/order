@@ -5,13 +5,22 @@
 }:
 let
   homeImports = {
-    "tori@aero" = [ ];
-    "tori@niji" = [ ];
+    "tori@aero" = [
+      ./aero
+      ../.
+    ];
+    "tori@niji" = [
+      ./niji
+      ../.
+    ];
     "tori@aether" = [
       ./aether
       ../.
     ];
-    "tori@wasabi" = [ ];
+    "tori@wasabi" = [
+      ./wasabi
+      ../.
+    ];
     default = [
       ./default
       ../.

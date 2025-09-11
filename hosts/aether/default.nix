@@ -10,6 +10,7 @@
     ./nix-ld.nix
     ./nvidia.nix
     ./virtualisation.nix
+    ./vpn.nix
     ./xorg.nix
     ./zram.nix
     ../common

@@ -73,10 +73,9 @@ in {
     xournalpp
 
     # programs
-    chatterino2
+    chatterino7
     google-chrome
     lima
-    modrinth-app
     vesktop
 
     # terminal
@@ -88,6 +87,7 @@ in {
     hexedit
     imagemagick
     neofetch
+    nh
     p7zip
     poppler_utils
     nss
@@ -100,6 +100,6 @@ in {
   ];
 
   nixpkgs.overlays = [
-    inputs.claude-code.overlays.default
+    # inputs.self.overlays.technorino
   ];
 }

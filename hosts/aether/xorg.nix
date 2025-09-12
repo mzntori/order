@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.libinput.mouse.middleEmulation = false;
 
   services.xserver = {
     enable = true;
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = ["nvidia"];
 
     desktopManager = {
       xterm.enable = false;
@@ -21,7 +19,6 @@
       extraPackages = with pkgs; [
         i3status
         i3lock
-        rofi
         xdg-user-dirs
       ];
     };

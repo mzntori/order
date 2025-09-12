@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   xsession.windowManager.i3 = {
     enable = true;
 
@@ -8,7 +6,6 @@
 
     extraPackages = with pkgs; [
       i3lock
-      rofi
       xdg-user-dirs
       xclip
       xcolor

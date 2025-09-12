@@ -37,6 +37,7 @@ in {
     ../../programs/terminal/starship
     ../../programs/terminal/vifm.nix
     ../../programs/tools/obs-studio.nix
+    ../../programs/tools/rofi.nix
     ../../programs/tools/wine.nix
     ../../programs/util/git.nix
   ];

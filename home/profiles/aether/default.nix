@@ -25,7 +25,6 @@ in {
 
     ../../packages/cemu.nix
     ../../packages/teams.nix
-    ../../packages/thunar.nix
 
     ../../programs/browsers/firefox
     ../../programs/editor/zed
@@ -70,6 +69,7 @@ in {
     scrot
     xclip
     xcolor
+    xfe
     xournalpp
 
     # programs

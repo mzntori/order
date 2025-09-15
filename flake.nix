@@ -1,4 +1,3 @@
-# lots of things stolen from https://git.flake.sh/notohh/snowflake
 {
   description = "order";
 

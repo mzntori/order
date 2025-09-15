@@ -1,14 +1,10 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
-    python312
-    python312Packages.pip
-    python312Packages.requests
+    (python313.withPackages (ps: with ps; [pip requests aiofiles aiohttp httpx pyjwt packaging json5 tenacity duckdb duckdb]))
   ];
 
   programs.ruff = {
     enable = true;
-    settings = { };
+    settings = {};
   };
 }

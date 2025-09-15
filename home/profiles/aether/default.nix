@@ -64,9 +64,11 @@ in {
     filezilla
     godot
     helvum
+    kanata
     krita
     nsxiv
     polychromatic
+    wootility
     scrot
     xclip
     xcolor

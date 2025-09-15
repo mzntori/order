@@ -11,7 +11,7 @@
 
     xkb = {
       layout = "us";
-      variant = "";
+      variant = "altgr-intl";
     };
 
     windowManager.i3 = {

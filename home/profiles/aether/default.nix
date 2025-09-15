@@ -23,6 +23,7 @@ in {
     ../../languages/python
     ../../languages/rust
 
+    ../../packages/norisk-client
     ../../packages/cemu.nix
     ../../packages/teams.nix
 

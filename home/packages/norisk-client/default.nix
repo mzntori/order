@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  norisk-client = pkgs.callPackage ./nnorisk-client.nix {};
+  norisk-client = pkgs.callPackage ./norisk-client.nix {};
 in {
   home.packages = [
     norisk-client

@@ -46,6 +46,11 @@ in
     ../../programs/util/git.nix
   ];
 
+  wayland.windowManager.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+
   home.packages = with pkgs; [
     # gaming
     azahar

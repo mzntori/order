@@ -1,9 +1,12 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   services.libinput.mouse.middleEmulation = false;
 
   services.xserver = {
     enable = true;
-    videoDrivers = ["nvidia"];
+    videoDrivers = [
+      "nvidia"
+    ];
 
     desktopManager = {
       xterm.enable = false;
@@ -14,13 +17,15 @@
       variant = "altgr-intl";
     };
 
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        i3status
-        i3lock
-        xdg-user-dirs
-      ];
+    windowManager = {
+      i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          i3status
+          i3lock
+          xdg-user-dirs
+        ];
+      };
     };
   };
 

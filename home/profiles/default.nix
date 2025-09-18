@@ -2,8 +2,7 @@
   inputs,
   self,
   ...
-}:
-let
+}: let
   homeImports = {
     "tori@aero" = [
       ./aero
@@ -27,11 +26,10 @@ let
     ];
   };
 
-  extraSpecialArgs = { inherit inputs self; };
+  extraSpecialArgs = {inherit inputs self;};
   pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-in
-{
-  _module.args = { inherit homeImports; };
+in {
+  _module.args = {inherit homeImports;};
 
   flake = {
     homeConfigurations = {

@@ -2,12 +2,14 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   cfg = {
     starship.settings = "aether";
   };
-in {
-  _module.args = {inherit cfg;};
+in
+{
+  _module.args = { inherit cfg; };
 
   imports = [
     # ../../gtk
@@ -23,9 +25,10 @@ in {
     ../../languages/python
     ../../languages/rust
 
-    ../../packages/norisk-client
     ../../packages/cemu.nix
     ../../packages/teams.nix
+    ../../packages/prismlauncher
+    ../../packages/norisk-client
 
     ../../programs/browsers/firefox
     ../../programs/editor/zed
@@ -50,7 +53,6 @@ in {
     lutris
     melonDS
     mgba
-    prismlauncher
     sc-controller
 
     # media

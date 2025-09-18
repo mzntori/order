@@ -3,6 +3,6 @@
 {
   home.packages = with pkgs; [
     nil
-    alejandra
+    nixfmt
   ];
 }

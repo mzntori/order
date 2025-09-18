@@ -1,109 +1,87 @@
 # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/rust/build-rust-package/default.nix
+# https://git.qyliss.net/nixlib/diff/doc/languages-frameworks/javascript.section.md?id=79a75faeb9b91b598a748f90f1026c477c5eb488&id2=063943c214aed7e583d9ec026a56e5b5b806b53d
 {
-  cargo-tauri,
+  stdenv,
   fetchFromGitHub,
   fetchYarnDeps,
-  lib,
-  yarn,
-  yarnBuildHook,
-  yarnConfigHook,
-  yarnInstallHook,
+  rustPlatform,
+  cargo,
+  rustc,
+  cargo-tauri,
   nodejs,
+  yarn,
+  yarnConfigHook,
   pkg-config,
-  wrapGAppsHook3,
-  openssl,
+  gobject-introspection,
   libsoup_3,
   webkitgtk_4_1,
-  glib-networking,
-  rustPlatform,
+  libayatana-appindicator,
+  openssl,
+  wrapGAppsHook4,
 }:
-rustPlatform.buildRustPackage (finalAttrs: rec {
+
+stdenv.mkDerivation (finalAttrs: {
   pname = "noriskclient-launcher";
-  version = "v0.6.8";
+  version = "0.6.9-beta.14";
 
   src = fetchFromGitHub {
     owner = "NoRiskClient";
     repo = "noriskclient-launcher";
-    rev = version;
+    tag = "v${finalAttrs.version}";
+    # rev = "1e0ab01d3fb05ea9fe4b2f00fd47119b7173685f";
     hash = "sha256-T33y9I6FXmrleLDBxTVMIQK35fZAgDgrKcb02ABAt+E=";
   };
 
-  npmDeps = fetchYarnDeps {
-    name = "${pname}-${version}-npm-deps";
-    inherit src;
-    forceGitDeps = true;
+  yarnOfflineCache = fetchYarnDeps {
+    yarnLock = finalAttrs.src + "/yarn.lock";
     hash = "sha256-MEdT/1jPtt9PIMGzBaiji67UUqwDi+vF//w9cAvtOBk=";
   };
 
-  cargoHash = "sha256-0vVN2vJW+hrjQeTEw3L8JKa4/C83sCtxNJEaTkwwbT8=";
   cargoRoot = "src-tauri";
-  buildAndTestSubdir = cargoRoot;
+  buildAndTestSubdir = finalAttrs.cargoRoot;
 
-  forceGitDeps = true;
-  makeCacheWritable = true;
+  cargoDeps = rustPlatform.fetchCargoVendor {
+    inherit (finalAttrs)
+      pname
+      version
+      src
+      cargoRoot
+      ;
+    hash = "sha256-0vVN2vJW+hrjQeTEw3L8JKa4/C83sCtxNJEaTkwwbT8=";
+  };
 
   nativeBuildInputs = [
+    rustPlatform.cargoSetupHook
+    cargo
+    rustc
     cargo-tauri.hook
     nodejs
+    yarn
+    yarnConfigHook
     pkg-config
-    wrapGAppsHook3
+    wrapGAppsHook4
   ];
 
   buildInputs = [
     openssl
+    gobject-introspection
     libsoup_3
     webkitgtk_4_1
-    glib-networking
-    yarn
+    libayatana-appindicator
   ];
 
-  buildPhase = ''
-    ${yarn}/bin/yarn build
+  postPatch = ''
+    substituteInPlace $cargoDepsCopy/libappindicator-sys-*/src/lib.rs \
+      --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
   '';
 
-  meta = {
-    description = "A Minecraft PVP Client Launcher";
-    homepage = "https://norisk.gg/";
-    license = lib.licenses.gpl3Only;
+  tauriBuildFlags = [
+    "-c"
+    "{\"bundle\":{\"createUpdaterArtifacts\":false}}"
+  ];
 
-    mainProgram = "no-risk-client";
+  meta = {
+    description = "";
+    homePage = "";
   };
 })
-# rustPlatform.buildRustPackage (finalAttrs: {
-#   pname = "ripgrep";
-#   version = "14.1.1";
-#   src = fetchFromGitHub {
-#     owner = "BurntSushi";
-#     repo = "ripgrep";
-#     rev = "${finalAttrs.version}";
-#     hash = "sha256-gyWnahj1A+iXUQlQ1O1H1u7K5euYQOld9qWm99Vjaeg=";
-#   };
-#   cargoHash = "sha256-9atn5qyBDy4P6iUoHFhg+TV6Ur71fiah4oTJbBMeEy4=";
-#   meta = {
-#     description = "Fast line-oriented regex search tool, similar to ag and ack";
-#     homepage = "https://github.com/BurntSushi/ripgrep";
-#     license = lib.licenses.unlicense;
-#     maintainers = [];
-#   };
-# })
-# stdenv.mkDerivation rec {
-#   pname = "icat";
-#   version = "v0.5";
-#   src = fetchFromGitHub {
-#     owner = "atextor";
-#     repo = "icat";
-#     rev = "${version}";
-#     sha256 = "sha256-aiLPVdKSppT/PWPW0Ue475WG61pBLh8OtLuk2/UU3nM=";
-#   };
-#   buildInputs = [
-#     imlib2
-#     xorg.libX11
-#   ];
-#   installPhase = ''
-#     runHook preInstall
-#     mkdir -p $out/bin
-#     cp icat icat $out/bin
-#     runHook postInstall
-#   '';
-# }
-

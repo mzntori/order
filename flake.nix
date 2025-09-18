@@ -17,13 +17,13 @@
         devShells.default = pkgs.mkShell {
           name = "order-dev";
           packages = with pkgs; [
-            alejandra
+          nixfmt
             git
             helix
             nil
           ];
         };
-        formatter = pkgs.alejandra;
+        formatter = pkgs.nixfmt;
       };
     };
 

@@ -1,187 +1,88 @@
 # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/rust/build-rust-package/default.nix
 # https://git.qyliss.net/nixlib/diff/doc/languages-frameworks/javascript.section.md?id=79a75faeb9b91b598a748f90f1026c477c5eb488&id2=063943c214aed7e583d9ec026a56e5b5b806b53d
-# {
-#   stdenv,
-#   fetchFromGitHub,
-#   fetchYarnDeps,
-#   rustPlatform,
-#   cargo,
-#   rustc,
-#   cargo-tauri,
-#   nodejs,
-#   yarn,
-#   yarnConfigHook,
-#   pkg-config,
-#   gobject-introspection,
-#   libsoup_3,
-#   webkitgtk_4_1,
-#   libayatana-appindicator,
-#   openssl,
-#   wrapGAppsHook4,
-#   glib-networking,
-# }:
-
-# stdenv.mkDerivation (finalAttrs: {
-#   pname = "noriskclient-launcher";
-#   version = "0.6.9-beta.14";
-
-#   src = fetchFromGitHub {
-#     owner = "NoRiskClient";
-#     repo = "noriskclient-launcher";
-#     tag = "v${finalAttrs.version}";
-#     hash = "sha256-T33y9I6FXmrleLDBxTVMIQK35fZAgDgrKcb02ABAt+E=";
-#   };
-
-#   yarnOfflineCache = fetchYarnDeps {
-#     yarnLock = finalAttrs.src + "/yarn.lock";
-#     hash = "sha256-MEdT/1jPtt9PIMGzBaiji67UUqwDi+vF//w9cAvtOBk=";
-#   };
-
-#   cargoRoot = "src-tauri";
-#   buildAndTestSubdir = finalAttrs.cargoRoot;
-
-#   cargoDeps = rustPlatform.fetchCargoVendor {
-#     inherit (finalAttrs)
-#       pname
-#       version
-#       src
-#       cargoRoot
-#       ;
-#     hash = "sha256-0vVN2vJW+hrjQeTEw3L8JKa4/C83sCtxNJEaTkwwbT8=";
-#   };
-
-#   nativeBuildInputs = [
-#     rustPlatform.cargoSetupHook
-#     cargo
-#     rustc
-#     cargo-tauri.hook
-#     nodejs
-#     yarn
-#     yarnConfigHook
-#     pkg-config
-#     wrapGAppsHook4
-#   ];
-
-#   buildInputs = [
-#     openssl
-#     gobject-introspection
-#     libsoup_3
-#     webkitgtk_4_1
-#     libayatana-appindicator
-#     glib-networking
-#   ];
-
-#   postPatch = ''
-#     substituteInPlace $cargoDepsCopy/libappindicator-sys-*/src/lib.rs \
-#       --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
-#   '';
-
-#   tauriBuildFlags = [
-#     "-c"
-#     "{\"bundle\":{\"createUpdaterArtifacts\":false}}"
-#   ];
-
-#   meta = {
-#     description = "";
-#     homePage = "";
-#   };
-# })
-
 {
-  lib,
   stdenv,
-  rustPlatform,
-  fetchYarnDeps,
-  cargo-tauri,
-  jq,
-  moreutils,
-  glib-networking,
-  nodejs,
-  yarnConfigHook,
-  openssl,
-  pkg-config,
-  webkitgtk_4_1,
-  wrapGAppsHook,
   fetchFromGitHub,
-  temurin-bin,
-  temurin-bin-8,
-  temurin-bin-17,
+  fetchYarnDeps,
+  rustPlatform,
+  cargo,
+  rustc,
+  cargo-tauri,
+  nodejs,
+  yarn,
+  yarnConfigHook,
+  pkg-config,
+  gobject-introspection,
+  libsoup_3,
+  webkitgtk_4_1,
   libayatana-appindicator,
-  pciutils,
+  openssl,
+  wrapGAppsHook4,
+  glib-networking,
 }:
 
-rustPlatform.buildRustPackage (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "noriskclient-launcher";
-  version = "0.6.8";
+  version = "0.6.9-beta.14";
+
   src = fetchFromGitHub {
     owner = "NoRiskClient";
     repo = "noriskclient-launcher";
-    rev = "v${finalAttrs.version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-T33y9I6FXmrleLDBxTVMIQK35fZAgDgrKcb02ABAt+E=";
-    fetchSubmodules = true;
   };
-
-  cargoHash = "sha256-0vVN2vJW+hrjQeTEw3L8JKa4/C83sCtxNJEaTkwwbT8=";
 
   yarnOfflineCache = fetchYarnDeps {
     yarnLock = finalAttrs.src + "/yarn.lock";
     hash = "sha256-MEdT/1jPtt9PIMGzBaiji67UUqwDi+vF//w9cAvtOBk=";
   };
 
-  nativeBuildInputs = [
-    cargo-tauri.hook
-    jq
-    moreutils
-    nodejs
-    yarnConfigHook
-    pkg-config
-  ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [ wrapGAppsHook ];
-
-  buildInputs = [
-    temurin-bin
-    temurin-bin-8
-    temurin-bin-17
-    pciutils
-  ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [
-    glib-networking
-    openssl
-    webkitgtk_4_1
-    libayatana-appindicator
-  ];
-
   cargoRoot = "src-tauri";
   buildAndTestSubdir = finalAttrs.cargoRoot;
 
-  # thank you to whoever wrote https://github.com/NixOS/nixpkgs/blob/04e40bca2a68d7ca85f1c47f00598abb062a8b12/pkgs/by-name/ca/cargo-tauri/test-app.nix#L23-L26
-  # thank you donovanglover your code in that pull request you made to nixpkgs was very useful
+  cargoDeps = rustPlatform.fetchCargoVendor {
+    inherit (finalAttrs)
+      pname
+      version
+      src
+      cargoRoot
+      ;
+    hash = "sha256-0vVN2vJW+hrjQeTEw3L8JKa4/C83sCtxNJEaTkwwbT8=";
+  };
+
+  nativeBuildInputs = [
+    rustPlatform.cargoSetupHook
+    cargo
+    rustc
+    cargo-tauri.hook
+    nodejs
+    yarn
+    yarnConfigHook
+    pkg-config
+    wrapGAppsHook4
+  ];
+
+  buildInputs = [
+    openssl
+    gobject-introspection
+    libsoup_3
+    webkitgtk_4_1
+    libayatana-appindicator
+    glib-networking
+  ];
+
   postPatch = ''
     substituteInPlace $cargoDepsCopy/libappindicator-sys-*/src/lib.rs \
-      --replace "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
-    jq \
-      '.plugins.updater.endpoints = [ ]
-      | .bundle.createUpdaterArtifacts = false' \
-      src-tauri/tauri.conf.json \
-      | sponge src-tauri/tauri.conf.json
+      --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
   '';
 
+  tauriBuildFlags = [
+    "-c"
+    "{\"bundle\":{\"createUpdaterArtifacts\":false}}"
+  ];
+
   meta = {
-    description = "Launcher for the NoRiskClient PvP client for Minecraft";
-    branch = "v3";
-    homepage = "https://norisk.gg/";
-    downloadPage = "https://github.com/";
-    maintainers = [
-      {
-        name = "JuxGD";
-        email = "jak@e.email";
-        github = "JuxGD";
-        githubId = 117054307;
-      }
-    ];
-    sourceProvenance = [ lib.sourceTypes.fromSource ];
-    license = lib.licenses.gpl3Only;
-    platforms = lib.platforms.linux;
-    mainProgram = "noriskclient-launcher-v3";
+    description = "";
+    homePage = "";
   };
 })

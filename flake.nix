@@ -1,35 +1,42 @@
 {
   description = "order";
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./home/profiles
         ./hosts
         ./overlays
       ];
-      systems = ["x86_64-linux"];
-      perSystem = {
-        config,
-        pkgs,
-        ...
-      }: {
-        devShells.default = pkgs.mkShell {
-          name = "order-dev";
-          packages = with pkgs; [
-          nixfmt
-            git
-            helix
-            nil
-          ];
+      systems = [ "x86_64-linux" ];
+      perSystem =
+        {
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          devShells.default = pkgs.mkShell {
+            name = "order-dev";
+            packages = with pkgs; [
+              nixfmt
+              git
+              helix
+              nil
+            ];
+          };
+          formatter = pkgs.nixfmt;
         };
-        formatter = pkgs.nixfmt;
-      };
     };
 
   inputs = {
     # nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # utils
     claude-code.url = "github:sadjow/claude-code-nix";

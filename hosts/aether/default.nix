@@ -1,9 +1,11 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./audio.nix
     ./bluetooth.nix
     ./boot.nix
     ./earlyoom.nix
+    ./fonts.nix
     ./gaming.nix
     ./hardware.nix
     # ./kanata.nix
@@ -17,6 +19,10 @@
     ./zram.nix
     ../common
   ];
+
+  environment.variables = {
+    WEBKIT_DISABLE_DMABUF_RENDERER = "1";
+  };
 
   # for testinmg
   programs.fish.enable = true;
@@ -37,7 +43,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = "gtk";
   };
 

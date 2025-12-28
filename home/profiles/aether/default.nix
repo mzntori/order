@@ -23,12 +23,12 @@ in
     ../../languages/latex
     ../../languages/nix
     ../../languages/python
-    ../../languages/rust
+    # ../../languages/rust
 
     ../../packages/cemu.nix
     ../../packages/teams.nix
     ../../packages/prismlauncher
-    ../../packages/norisk-client
+    # ../../packages/norisk-client
 
     ../../programs/browsers/firefox
     ../../programs/editor/zed
@@ -58,6 +58,7 @@ in
     lutris
     melonDS
     mgba
+    nestopia-ue
     sc-controller
 
     # media
@@ -73,11 +74,13 @@ in
     godot
     helvum
     kanata
+    kdePackages.kdenlive
     krita
     nsxiv
     polychromatic
     wootility
     scrot
+    xclicker
     xclip
     xcolor
     xfe
@@ -90,6 +93,7 @@ in
     vesktop
 
     # terminal
+    btop
     calcurse
     claude-code
     ddev
@@ -100,7 +104,7 @@ in
     neofetch
     nh
     p7zip
-    poppler_utils
+    poppler-utils
     nss
 
     # libs

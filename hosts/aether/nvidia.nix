@@ -1,14 +1,26 @@
 { config, ... }:
 
 {
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
+  boot = {
+    kernelParams = [ "module_blacklist=amdgpu" ];
+    kernelModules = [
+      "nvidia"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+    ];
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   hardware.nvidia = {
+    nvidiaPersistenced = true;
     modesetting.enable = true;
     nvidiaSettings = true;
     open = false;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     powerManagement = {
       enable = true;

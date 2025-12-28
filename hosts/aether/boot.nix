@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   boot = {
     tmp.cleanOnBoot = true;
 
@@ -9,5 +10,7 @@
       device = "/dev/sda";
       useOSProber = true;
     };
+
+    supportedFilesystems = [ "ntfs" ];
   };
 }

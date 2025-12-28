@@ -5,13 +5,13 @@
 }:
 buildGoModule rec {
   pname = "nrc-wrapper-go";
-  version = "v1.3.8-2";
+  version = "v1.3.11";
 
   src = fetchFromGitHub {
     owner = "technicfan";
     repo = "nrc-wrapper-go";
-    rev = version;
-    hash = "sha256-LNLnh3Vnr4OKIXbTg5HgOKopkchKP8XS/eTw2tBe20I=";
+    tag = version;
+    hash = "sha256-VgFJMF6bH9bO1YbX0x5eVvJWzUyJ52A56ZZHefk8w7k=";
   };
 
   vendorHash = "sha256-PvwvVavGTV5QGprMn1M2SOq6upaYCzyzM6dNvZzlXo4=";

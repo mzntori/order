@@ -28,6 +28,7 @@ in
     ../../packages/cemu.nix
     ../../packages/teams.nix
     ../../packages/prismlauncher
+    ../../packages/livesplit-one-druid
     # ../../packages/norisk-client
 
     ../../programs/browsers/firefox
@@ -71,13 +72,15 @@ in
     aseprite
     blockbench
     filezilla
-    godot
+    godot-mono
     helvum
     kanata
     kdePackages.kdenlive
     krita
+    lorien
     nsxiv
     polychromatic
+    unityhub
     wootility
     scrot
     xclicker
@@ -85,6 +88,7 @@ in
     xcolor
     xfe
     xournalpp
+    gpu-screen-recorder-gtk
 
     # programs
     chatterino7
@@ -95,7 +99,7 @@ in
     # terminal
     btop
     calcurse
-    claude-code
+    # claude-code
     ddev
     file
     gnumake
